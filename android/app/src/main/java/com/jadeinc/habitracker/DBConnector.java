@@ -1,6 +1,5 @@
 package com.jadeinc.habitracker;
 import android.util.Log;
-import com.google.gson.JsonParser;
 import com.loopj.android.http.*;
 import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.HttpResponse;
