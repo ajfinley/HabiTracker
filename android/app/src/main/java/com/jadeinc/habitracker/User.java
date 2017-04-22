@@ -1,5 +1,6 @@
 package com.jadeinc.habitracker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class User {
     private String name;
     private String username;
     private String password;
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<Task>();
 
     public User(String name, String email, String username, String password) {
         this.name = name;
@@ -33,7 +34,7 @@ public class User {
     }
 
     public String getEmail() {
-        return name;
+        return this.email;
     }
 
     public void setEmail(String email) {
@@ -41,7 +42,7 @@ public class User {
     }
 
     public String getPassword() {
-        return name;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -49,7 +50,7 @@ public class User {
     }
 
     public String getUsername() {
-        return name;
+        return this.username;
     }
 
     public void setUsername(String username) {
