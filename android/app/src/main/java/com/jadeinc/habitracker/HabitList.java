@@ -52,12 +52,6 @@ public class HabitList extends AppCompatActivity {
                 }
                 else
                     break;
-            case R.id.checkbox_item1:
-                if (checked){
-                    System.out.print("This is if statement");
-                }
-                else
-                    break;
                 // TODO: We need to think of a way to populate the list to come up
         }
     }
