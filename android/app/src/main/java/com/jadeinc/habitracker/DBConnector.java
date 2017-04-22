@@ -1,29 +1,17 @@
 package com.jadeinc.habitracker;
-import android.content.Context;
 import android.util.Log;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.loopj.android.http.*;
-import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.client.ClientProtocolException;
-import cz.msebera.android.httpclient.client.ResponseHandler;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.async.Callback;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -34,97 +22,98 @@ public class DBConnector {
     public static final String TAG = "DBConnector";
 
     public static final String DATABASE_ENDPOINT = "https://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
-    private AsyncHttpClient client;
 
-    public DBConnector(AsyncHttpClient client) {
-        this.client = client;
+    public DBConnector() {
     }
 
-    public void getUsers(final DBListener listener) {
-        Log.e("connnector", "getting users");
+    public void postUser(final User user) {
+        new Thread() {
+            public void run() {
+                String rootString = getPostString(user);
+                Unirest.post(DATABASE_ENDPOINT)
+                        .header("accept", "application/json")
+                        .body(rootString)
+                        .asStringAsync(new Callback<String>() {
+                    @Override
+                    public void completed(HttpResponse<String> httpResponse) {
+                        Log.v(TAG, "completed: " + httpResponse.getBody().toString());
+                    }
 
-        client.get(DATABASE_ENDPOINT, new TextHttpResponseHandler() {
+                    @Override
+                    public void failed(UnirestException e) {
+                        Log.v(TAG, "failed");
+                    }
 
-            @Override
-            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
-                Log.v("DBConnector", s);
-                listener.onFailure(s);
+                    @Override
+                    public void cancelled() {
+
+                    }
+                });
             }
-
-            @Override
-            public void onSuccess(int ii, Header[] headers, String s) {
-                List<User> users = generateUsers(s);
-                listener.onSuccess(users);
-                Log.v("users", users.toString());
-            }
-        });
+        }.start();
     }
 
-    //BROKEN!!
-    public void postUser(User user) {
-        RequestParams params = new RequestParams();
-        params.add("TableName", "HabitTracker");
-        ObjectWriter ow = new ObjectMapper().writerWithDefaultPrettyPrinter();
-        Log.v(TAG, "before json: " + user.toString());
-        String json = "";
+    private String getPostString(User user) {
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            json = ow.writeValueAsString(user);
-            Log.v(TAG, json);
-        } catch (JsonProcessingException jpe) {
-            Log.e(TAG, "failed to convert user to json: " + jpe.toString());
+            String userString = mapper.writeValueAsString(user);
+            JsonNode node = mapper.readTree(userString);
+            ObjectNode root = mapper.createObjectNode();
+            root.put("TableName", "HabitTracker");
+            root.put("Item", node);
+            return mapper.writeValueAsString(root);
+        } catch (Exception e) {
+            Log.e(TAG, "error making string", e);
         }
-        //params.add("Items", json);
-
-        client.post(DATABASE_ENDPOINT, params, new TextHttpResponseHandler() {
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e(TAG, responseString + throwable.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Log.v(TAG, "worked");
-            }
-        });
+        return null;
     }
 
-    private List<User> generateUsers(String userJSON) {
-        List<User> users = new ArrayList<User>();
-        JSONParser parser = new JSONParser();
+    public void getUsers(final DBListener dbListener) {
+        new Thread() {
+            public void run() {
+                Unirest.get(DATABASE_ENDPOINT).asStringAsync(new Callback<String>() {
+                    @Override
+                    public void completed(HttpResponse<String> httpResponse) {
+                        List<User> users = generateUsers(httpResponse.getBody());
+                        dbListener.onSuccess(users);
+                    }
+
+                    @Override
+                    public void failed(UnirestException e) {
+                        Log.e(TAG, e.toString());
+                    }
+
+                    @Override
+                    public void cancelled() {
+                        Log.e(TAG, "cancelled");
+                    }
+                });
+            }
+        }.start();
+    }
+
+    private List<User> generateUsers(String response) {
+        List<User> users = new ArrayList<>();
         try {
-            Object obj = parser.parse(userJSON);
-            JSONObject jo = (JSONObject) obj;
-            JSONArray userList = (JSONArray) jo.get("Items");
-            for(Object userObj : userList) {
-                User user = generateUser((JSONObject) userObj);
-                JSONArray jTasks = (JSONArray) ((JSONObject) userObj).get("tasks");
-                user.setTasks(generateTasks(jTasks));
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node =  mapper.readTree(response).get("Items");
+            for (JsonNode userJson : node) {
+                User user = mapper.readValue(userJson.toString(), User.class);
+                List<Task> tasks = new ArrayList<>();
+                for (JsonNode taskJson : userJson.get("tasks")) {
+                    Task task = mapper.readValue(taskJson.toString(), Task.class);
+                    tasks.add(task);
+                }
+                user.setTasks(tasks);
                 users.add(user);
             }
-        } catch (ParseException pe) {
-            Log.v("DBConnector", pe.toString());
+        } catch (Exception e) {
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            Log.e(TAG, sw.toString());
         }
         return users;
-    }
-
-    private User generateUser(JSONObject jUser) {
-        User user = new User();
-        user.setName((String) jUser.get("name"));
-        user.setEmail((String) jUser.get("email"));
-        user.setUsername((String) jUser.get("userid"));
-        user.setPassword((String) jUser.get("password"));
-        return user;
-    }
-
-    private List<Task> generateTasks(JSONArray jTasks) {
-        List<Task> tasks = new ArrayList<>();
-        for(Object taskObj : jTasks) {
-            Task task = new Task();
-            task.setName((String) ((JSONObject) taskObj).get("task"));
-            tasks.add(task);
-        }
-        return tasks;
     }
 
 }

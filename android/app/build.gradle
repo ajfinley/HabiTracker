@@ -32,19 +32,28 @@ android {
     }
 }
 
+repositories {
+    maven{
+        url 'https://raw.github.com/zeeshanejaz/unirest-android/mvn-repo'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+
     compile 'com.android.support:appcompat-v7:22.2.1'
     testCompile 'junit:junit:4.12'
 
     compile 'com.loopj.android:android-async-http:1.4.9'
 
-    compile 'com.github.cliftonlabs:json-simple:2.1.2'
-
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
+
+    compile 'com.mashape.unirest:unirest-android:1.0.+'
+
 }

@@ -12,9 +12,11 @@ public class User {
     private String name;
     private String username;
     private String password;
+    private String userid;
     private List<Task> tasks = new ArrayList<Task>();
 
-    public User(String name, String email, String username, String password) {
+    public User(String userid, String name, String email, String username, String password) {
+        this.userid = userid;
         this.name = name;
         this.email = email;
         this.username = username;
@@ -57,6 +59,10 @@ public class User {
         this.username = username;
     }
 
+    public void setUserid(String userid) { this.userid = userid; }
+
+    public String getUserid() {return this.userid;}
+
     public void setTasks(List tasks) {
         this.tasks = tasks;
     }
@@ -65,12 +71,14 @@ public class User {
         return this.tasks;
     }
 
+    public void addTask(Task task) {
+        this.tasks.add(task);
+    }
+
     @Override
     public String toString() {
         String s = "name: " + this.name + ", tasks: ";
-        for(Task task : this.tasks) {
-            s += task.toString() + ", ";
-        }
+        s += this.tasks.toString();
         return s;
     }
 
