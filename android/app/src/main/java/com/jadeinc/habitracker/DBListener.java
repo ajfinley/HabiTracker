@@ -9,6 +9,4 @@ public interface DBListener {
 
     void onSuccess(List<User> users);
 
-    void onFailure(String s);
-
 }

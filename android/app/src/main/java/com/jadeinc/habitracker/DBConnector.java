@@ -36,12 +36,12 @@ public class DBConnector {
                         .asStringAsync(new Callback<String>() {
                     @Override
                     public void completed(HttpResponse<String> httpResponse) {
-                        Log.v(TAG, "completed: " + httpResponse.getBody().toString());
+                        Log.v(TAG, "completed: " + httpResponse.getBody());
                     }
 
                     @Override
                     public void failed(UnirestException e) {
-                        Log.v(TAG, "failed");
+                        Log.v(TAG, "failed", e);
                     }
 
                     @Override
@@ -80,7 +80,7 @@ public class DBConnector {
 
                     @Override
                     public void failed(UnirestException e) {
-                        Log.e(TAG, e.toString());
+                        Log.e(TAG, e.toString(), e);
                     }
 
                     @Override

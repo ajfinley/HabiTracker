@@ -7,6 +7,7 @@ public class Task {
     private String task;
     private String time;
     private String frequency;
+    private String timeCompleted;
 
     public Task() {}
 
@@ -26,6 +27,9 @@ public class Task {
 
     public String getFrequency() { return this.frequency; }
     public void setFrequency(String frequency) { this.frequency = frequency; }
+
+    public String getTimeCompleted() {return this.timeCompleted;}
+    public void setTimeCompleted(String timeCompleted) {this.timeCompleted = timeCompleted;}
 
     @Override
     public String toString() {
