@@ -3,6 +3,7 @@ package com.jadeinc.habitracker;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 
@@ -11,8 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 
 public class LoginActivity extends Activity  {
+
+    public static final String TAG = "LoginActivity";
+
     Button b1,b2;
     EditText ed1,ed2;
 
@@ -27,6 +33,7 @@ public class LoginActivity extends Activity  {
         b1 = (Button)findViewById(R.id.button);
         ed1 = (EditText)findViewById(R.id.editText);
         ed2 = (EditText)findViewById(R.id.editText2);
+
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,6 +9,9 @@ public class Task {
     private String frequency;
     private String timeCompleted;
 
+    public int bestStreak;
+    public int currentStreak;
+
     public Task() {}
 
     public Task(String task) {

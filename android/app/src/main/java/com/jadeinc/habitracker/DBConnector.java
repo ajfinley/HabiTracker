@@ -46,7 +46,7 @@ public class DBConnector {
 
                     @Override
                     public void cancelled() {
-
+                        Log.v(TAG, "cancelled");
                     }
                 });
             }
