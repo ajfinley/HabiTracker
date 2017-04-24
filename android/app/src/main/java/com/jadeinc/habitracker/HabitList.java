@@ -1,5 +1,6 @@
 package com.jadeinc.habitracker;
 
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,12 +9,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import android.widget.CheckBox;
+import android.util.Log;
+
+import java.util.List;
+
 
 public class HabitList extends AppCompatActivity {
+
+    public static final String TAG = "HabitList";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new DBConnector().getUsers(new DBListener() {
+            @Override
+            public void onSuccess(List<User> users) {
+                Log.v(TAG, users.toString());
+            }
+        });
         setContentView(R.layout.activity_habit_list);
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);

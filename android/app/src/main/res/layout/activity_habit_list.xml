@@ -186,6 +186,4 @@
         <!-- The text should change to the title of the event. Not hardcoded.-->
 
     </LinearLayout>
-
-
 </RelativeLayout>
