@@ -21,12 +21,8 @@ public class HabitList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        new DBConnector().getUsers(new DBListener() {
-            @Override
-            public void onSuccess(List<User> users) {
-                Log.v(TAG, users.toString());
-            }
-        });
+        makeCallDB();
+
         setContentView(R.layout.activity_habit_list);
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);
@@ -54,6 +50,23 @@ public class HabitList extends AppCompatActivity {
         tvDisplayDate2.setText(tomorrowtomorrowAsString);
 
     }
+
+    private void makeCallDB() {
+        new DBConnector().getUsers(new DBListener() {
+            @Override
+            public void onSuccess(List<User> users) {
+                Log.v(TAG, users.toString());
+                generateListTask(users);
+            }
+        });
+    }
+
+    private void generateListTask(List<User> users) {
+        User user = users.get(0);
+        List<Task> tasks = user.getTasks();
+    }
+
+
 
     public void onCheckboxClicked(View view) {
         boolean checked = ((CheckBox) view).isChecked();
