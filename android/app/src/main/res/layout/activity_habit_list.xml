@@ -116,87 +116,95 @@
         android:id="@+id/tvDate1"
         android:layout_below="@+id/task_item0"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="8dp"
-        android:textSize="16sp"
-        android:background="@color/background"
-        android:text="Tomorrow's Date"/>
-    <!-- This will change to an actual date. e.g. Friday, April 21, 2017 -->
+        android:layout_height="match_parent"
+        android:id="@+id/lv_today"
+        android:layout_below="@+id/tvDate0"/>
+
+    <!--<TextView-->
+        <!--android:id="@+id/tvDate1"-->
+        <!--android:layout_below="@+id/lv_today"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:padding="8dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:background="@color/background"-->
+        <!--android:text="Tomorrow's Date"/>-->
+    <!--&lt;!&ndash; This will change to an actual date. e.g. Friday, April 21, 2017 &ndash;&gt;-->
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:id="@+id/task_item1"
-        android:layout_below="@+id/tvDate1"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/task_item1"-->
+        <!--android:layout_below="@+id/tvDate1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-        <CheckBox android:id="@+id/checkbox_item0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginTop="6dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="WATER THE PLANTS"
-            android:onClick="onCheckboxClicked"/>
-        <!-- The text should change to the title of the event. Not hardcoded.-->
+        <!--<CheckBox android:id="@+id/checkbox_item0"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="22sp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="WATER THE PLANTS"-->
+            <!--android:onClick="onCheckboxClicked"/>-->
+        <!--&lt;!&ndash; The text should change to the title of the event. Not hardcoded.&ndash;&gt;-->
 
-        <CheckBox android:id="@+id/checkbox_item1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginTop="6dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="GO TO THE GYM"
-            android:onClick="onCheckboxClicked"/>
-        <!-- The text should change to the title of the event. Not hardcoded.-->
+        <!--<CheckBox android:id="@+id/checkbox_item1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="22sp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="GO TO THE GYM"-->
+            <!--android:onClick="onCheckboxClicked"/>-->
+        <!--&lt;!&ndash; The text should change to the title of the event. Not hardcoded.&ndash;&gt;-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
-    <TextView
-        android:id="@+id/tvDate2"
-        android:layout_below="@+id/task_item1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="8dp"
-        android:textSize="16sp"
-        android:background="@color/background"
-        android:text="Tomorrow Tomorrow's Date"/>
-    <!-- This will change to an actual date. e.g. Saturday, April 22, 2017 -->
+    <!--<TextView-->
+        <!--android:id="@+id/tvDate2"-->
+        <!--android:layout_below="@+id/task_item1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:padding="8dp"-->
+        <!--android:textSize="16sp"-->
+        <!--android:background="@color/background"-->
+        <!--android:text="Tomorrow Tomorrow's Date"/>-->
+    <!--&lt;!&ndash; This will change to an actual date. e.g. Saturday, April 22, 2017 &ndash;&gt;-->
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:id="@+id/task_item2"
-        android:layout_below="@+id/tvDate2"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:orientation="vertical"-->
+        <!--android:id="@+id/task_item2"-->
+        <!--android:layout_below="@+id/tvDate2"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-        <CheckBox android:id="@+id/checkbox_item0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginTop="6dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Water the plants"
-            android:onClick="onCheckboxClicked"/>
-        <!-- The text should change to the title of the event. Not hardcoded.-->
+        <!--<CheckBox android:id="@+id/checkbox_item0"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="22sp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="Water the plants"-->
+            <!--android:onClick="onCheckboxClicked"/>-->
+        <!--&lt;!&ndash; The text should change to the title of the event. Not hardcoded.&ndash;&gt;-->
 
-        <CheckBox android:id="@+id/checkbox_item1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginTop="6dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:text="Go to the gym"
-            android:onClick="onCheckboxClicked"/>
-        <!-- The text should change to the title of the event. Not hardcoded.-->
+        <!--<CheckBox android:id="@+id/checkbox_item1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="22sp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:text="Go to the gym"-->
+            <!--android:onClick="onCheckboxClicked"/>-->
+        <!--&lt;!&ndash; The text should change to the title of the event. Not hardcoded.&ndash;&gt;-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 </RelativeLayout>

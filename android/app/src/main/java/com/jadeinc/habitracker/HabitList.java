@@ -4,6 +4,7 @@ package com.jadeinc.habitracker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.List;
 public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
+    ListView lv;
 
 
 
@@ -41,8 +43,8 @@ public class HabitList extends AppCompatActivity {
 
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);
-        TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
-        TextView tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
+        //TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
+        //TextView tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
 
 
 
@@ -62,9 +64,8 @@ public class HabitList extends AppCompatActivity {
 
 
         tvDisplayDate0.setText(todayAsString);
-        tvDisplayDate1.setText(tomorrowAsString);
-        tvDisplayDate2.setText(tomorrowtomorrowAsString);
-
+        //tvDisplayDate1.setText(tomorrowAsString);
+        //tvDisplayDate2.setText(tomorrowtomorrowAsString);
     }
 
     private void makeCallDB() {
@@ -84,24 +85,13 @@ public class HabitList extends AppCompatActivity {
         for (Task task: tasks) {
             task_names.add(task.getTask());
         }
+        System.out.println(tasks);
+        Task[] taskDisplay = (Task[]) tasks.toArray();
+        lv = (ListView) findViewById(R.id.lv_today);
+        Adapter adapter = new Adapter(this, taskDisplay);
+        lv.setAdapter(adapter);
     }
 
-
-
-
-    public void onCheckboxClicked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.checkbox_item0:
-                if (checked) {
-                    System.out.print("This is if statement");
-                }
-                else
-                    break;
-                // TODO: We need to think of a way to populate the list to come up
-        }
-    }
 
 
     @Override
