@@ -54,8 +54,13 @@ public class HabitList extends AppCompatActivity {
 
         lv = (ListView) findViewById(R.id.lv_today);
         taskDisplay = new ModelTask[5];
+        //TODO temporary additions until i can figure out database population
+        taskDisplay[0] = new ModelTask("go to gym", true);
+        taskDisplay[1] = new ModelTask("read book", false);
+        taskDisplay[2] = new ModelTask("water plants", false);
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
+
     }
 
     private void makeCallDB() {
