@@ -39,6 +39,9 @@ public class Task {
 
     public boolean isCompleted() {
         long currTime = System.currentTimeMillis() / 1000;
+        if (timeCompleted == null) {
+            return false;
+        }
         if (currTime - daySec >= Integer.parseInt(timeCompleted)) {
             return true;
         }

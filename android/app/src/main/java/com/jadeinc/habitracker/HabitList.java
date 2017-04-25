@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import android.widget.CheckBox;
@@ -66,8 +67,8 @@ public class HabitList extends AppCompatActivity {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
         System.out.println(tasks);
-        lv = (ListView) findViewById(R.id.lv_today);
         Task[] taskDisplay = (Task[]) tasks.toArray();
+        lv = (ListView) findViewById(R.id.lv_today);
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
     }
