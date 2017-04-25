@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_habit_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="0dp"
     tools:context="com.jadeinc.habitracker.HabitList">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#00a86b"
+        android:textColor="#ffffff"
+        android:elevation="4dp"
+        app:itemTextColor="#ffffff"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <LinearLayout
         android:id="@+id/menu"
+        android:layout_below="@+id/my_toolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="0dp"
@@ -75,18 +87,19 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
-        <CheckBox android:id="@+id/checkbox_item0"
+        <CheckBox
+            android:id="@+id/today_checkbox_item0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:layout_marginTop="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="WATER THE PLANTS"
+            android:text="Water the Plants"
             android:onClick="onCheckboxClicked"/>
         <!-- The text should change to the title of the event. Not hardcoded.-->
 
-        <CheckBox android:id="@+id/checkbox_item1"
+        <CheckBox android:id="@+id/today_checkbox_item1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
