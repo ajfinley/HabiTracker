@@ -58,6 +58,8 @@ public class HabitList extends AppCompatActivity {
         taskDisplay[0] = new ModelTask("go to gym", true);
         taskDisplay[1] = new ModelTask("read book", false);
         taskDisplay[2] = new ModelTask("water plants", false);
+        taskDisplay[3] = new ModelTask("feed dog", false);
+        taskDisplay[4] = new ModelTask("move car", true);
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
 
