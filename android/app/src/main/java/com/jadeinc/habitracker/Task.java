@@ -34,7 +34,6 @@ public class Task {
     public void setFrequency(String frequency) { this.frequency = frequency; }
 
     public String getTimeCompleted() {return this.timeCompleted;}
-
     public void setTimeCompleted(String timeCompleted) {this.timeCompleted = timeCompleted;}
 
     public boolean isCompleted() {
