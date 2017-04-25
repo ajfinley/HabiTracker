@@ -19,7 +19,6 @@ public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
     ListView lv;
-    ModelTask[] taskDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +50,6 @@ public class HabitList extends AppCompatActivity {
         tvDisplayDate0.setText(todayAsString);
         //tvDisplayDate1.setText(tomorrowAsString);
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
-
-        lv = (ListView) findViewById(R.id.lv_today);
-        taskDisplay = new ModelTask[5];
-        //TODO temporary additions until i can figure out database population
-        taskDisplay[0] = new ModelTask("go to gym", true);
-        taskDisplay[1] = new ModelTask("read book", false);
-        taskDisplay[2] = new ModelTask("water plants", false);
-        taskDisplay[3] = new ModelTask("feed dog", false);
-        taskDisplay[4] = new ModelTask("move car", true);
-        Adapter adapter = new Adapter(this, taskDisplay);
-        lv.setAdapter(adapter);
-
     }
 
     private void makeCallDB() {
@@ -78,6 +65,11 @@ public class HabitList extends AppCompatActivity {
     private void generateListTask(List<User> users) {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
+        System.out.println(tasks);
+        lv = (ListView) findViewById(R.id.lv_today);
+        Task[] taskDisplay = (Task[]) tasks.toArray();
+        Adapter adapter = new Adapter(this, taskDisplay);
+        lv.setAdapter(adapter);
     }
 
 

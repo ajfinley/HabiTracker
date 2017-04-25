@@ -12,12 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class Adapter extends ArrayAdapter<ModelTask>{
-        ModelTask[] tasks = null;
+public class Adapter extends ArrayAdapter<Task>{
+        Task[] tasks = null;
         Context context;
 
-        public Adapter(Context context, ModelTask[] resource) {
-            super(context,R.layout.task_row, resource);
+        public Adapter(Context context, Task[] resource) {
+            super(context, R.layout.task_row, resource);
             this.context = context;
             this.tasks = resource;
         }
@@ -28,8 +28,8 @@ public class Adapter extends ArrayAdapter<ModelTask>{
             convertView = inflater.inflate(R.layout.task_row, parent, false);
             TextView name = (TextView) convertView.findViewById(R.id.textView1);
             CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
-            name.setText(tasks[position].getName());
-            if(tasks[position].isEnabled()) {
+            name.setText(tasks[position].getTask());
+            if(tasks[position].isCompleted()) {
                 cb.setChecked(true);
             } else {
                 cb.setChecked(false);

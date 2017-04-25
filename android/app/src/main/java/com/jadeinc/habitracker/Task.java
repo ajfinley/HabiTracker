@@ -3,11 +3,13 @@ package com.jadeinc.habitracker;
 /**
  * Created by evan on 4/20/17.
  */
+
 public class Task {
     private String task;
     private String time;
     private String frequency;
     private String timeCompleted;
+    private long daySec = 86400;
 
     public int bestStreak;
     public int currentStreak;
@@ -32,7 +34,16 @@ public class Task {
     public void setFrequency(String frequency) { this.frequency = frequency; }
 
     public String getTimeCompleted() {return this.timeCompleted;}
+
     public void setTimeCompleted(String timeCompleted) {this.timeCompleted = timeCompleted;}
+
+    public boolean isCompleted() {
+        long currTime = System.currentTimeMillis() / 1000;
+        if (currTime - daySec >= Integer.parseInt(timeCompleted)) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public String toString() {
