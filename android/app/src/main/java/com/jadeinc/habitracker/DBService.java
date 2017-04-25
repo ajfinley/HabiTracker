@@ -1,4 +1,8 @@
 package com.jadeinc.habitracker;
+import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,13 +21,16 @@ import java.util.List;
 /**
  * Created by evan on 4/20/17.
  */
-public class DBConnector {
+public class DBService extends IntentService {
 
     public static final String TAG = "DBConnector";
 
     public static final String DATABASE_ENDPOINT = "https://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
 
-    public DBConnector() {
+    public static List<User> users;
+
+    public DBService() {
+        super("DBConnector");
     }
 
     public void postUser(final User user) {
@@ -68,29 +75,6 @@ public class DBConnector {
         return null;
     }
 
-    public void getUsers(final DBListener dbListener) {
-        new Thread() {
-            public void run() {
-                Unirest.get(DATABASE_ENDPOINT).asStringAsync(new Callback<String>() {
-                    @Override
-                    public void completed(HttpResponse<String> httpResponse) {
-                        List<User> users = generateUsers(httpResponse.getBody());
-                        dbListener.onSuccess(users);
-                    }
-
-                    @Override
-                    public void failed(UnirestException e) {
-                        Log.e(TAG, e.toString(), e);
-                    }
-
-                    @Override
-                    public void cancelled() {
-                        Log.e(TAG, "cancelled");
-                    }
-                });
-            }
-        }.start();
-    }
 
     private List<User> generateUsers(String response) {
         List<User> users = new ArrayList<>();
@@ -116,4 +100,30 @@ public class DBConnector {
         return users;
     }
 
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        Log.v(TAG, "omg it worked");
+        Unirest.get(DATABASE_ENDPOINT).asStringAsync (new Callback<String>() {
+            @Override
+            public void completed(HttpResponse<String> httpResponse) {
+                List<User> users = generateUsers(httpResponse.getBody());
+                DBDataReceiver.users = users;
+                Intent broadcastIntent = new Intent();
+                broadcastIntent.setAction(DBDataReceiver.ACTION_RESP);
+                broadcastIntent.addCategory(Intent.CATEGORY_DEFAULT);
+                sendBroadcast(broadcastIntent);
+                Log.v(TAG, "got users");
+            }
+
+            @Override
+            public void failed(UnirestException e) {
+                Log.e(TAG, e.toString(), e);
+            }
+
+            @Override
+            public void cancelled() {
+                Log.e(TAG, "cancelled");
+            }
+        });
+    }
 }

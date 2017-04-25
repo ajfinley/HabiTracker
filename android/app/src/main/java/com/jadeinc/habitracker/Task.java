@@ -38,14 +38,15 @@ public class Task {
     public void setTimeCompleted(String timeCompleted) {this.timeCompleted = timeCompleted;}
 
     public boolean isCompleted() {
-        long currTime = System.currentTimeMillis() / 1000;
-        if (timeCompleted == null) {
-            return false;
-        }
-        if (currTime - daySec >= Integer.parseInt(timeCompleted)) {
-            return true;
-        }
         return false;
+//        long currTime = System.currentTimeMillis() / 1000;
+//        if (timeCompleted == null) {
+//            return false;
+//        }
+//        if (currTime - daySec >= Integer.parseInt(timeCompleted)) {
+//            return true;
+//        }
+//        return false;
     }
 
     @Override

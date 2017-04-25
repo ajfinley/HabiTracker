@@ -1,17 +1,17 @@
 package com.jadeinc.habitracker;
 
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import android.widget.CheckBox;
+
 import android.util.Log;
 
 import java.util.List;
@@ -19,13 +19,22 @@ import java.util.List;
 
 public class HabitList extends AppCompatActivity {
 
+
+
     public static final String TAG = "HabitList";
     private ListView lv;
     private List<Task> taskDisplay;
+    private DBDataReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        IntentFilter filter = new IntentFilter(DBDataReceiver.ACTION_RESP);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new DBDataReceiver();
+        registerReceiver(receiver, filter);
+
         makeCallDB();
 
         setContentView(R.layout.activity_habit_list);
@@ -61,20 +70,21 @@ public class HabitList extends AppCompatActivity {
     }
 
     private void makeCallDB() {
-        new DBConnector().getUsers(new DBListener() {
-            @Override
-            public void onSuccess(List<User> users) {
-                Log.v(TAG, users.toString());
-                generateListTask(users);
-            }
-        });
+        Log.v("hi", "Starting service");
+        Intent dbIntent = new Intent(this, DBService.class);
+        startService(dbIntent);
     }
 
-    private void generateListTask(List<User> users) {
+    public void generateTaskList(List<User> users) {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
         ((Adapter)lv.getAdapter()).updateTasks(tasks);
+        Log.v("hello", "yes i finished");
     }
+
+
+
+
 
 
 
