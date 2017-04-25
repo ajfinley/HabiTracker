@@ -56,14 +56,13 @@ public class HabitList extends AppCompatActivity {
             @Override
             public void onSuccess(List<User> users) {
                 Log.v(TAG, users.toString());
-                generateListTask(users);
+                generateTaskList(users.get(0).getTasks());
             }
         });
     }
 
-    private void generateListTask(List<User> users) {
-        User user = users.get(0);
-        List<Task> tasks = user.getTasks();
+    private void generateTaskList(List<Task> tasks) {
+
     }
 
 

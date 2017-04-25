@@ -38,8 +38,9 @@ public class LoginActivity extends Activity  {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ed1.getText().toString().equals("admin") &&
-                        ed2.getText().toString().equals("admin")) {
+                if(true) {
+//                if(ed1.getText().toString().equals("admin") &&
+//                        ed2.getText().toString().equals("admin")) {
                     Toast.makeText(getApplicationContext(),
                             "Getting your schedule up to date...",Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginActivity.this, HabitList.class);

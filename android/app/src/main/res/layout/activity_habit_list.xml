@@ -55,25 +55,14 @@
             android:text="settings"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvDate0"
-        android:layout_below="@+id/menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:padding="8dp"
-        android:textSize="16sp"
-        android:background="@color/background"
-        android:text="Today's Date"/>
     <!-- This will change to an actual date. e.g. Thursday, April 20, 2017 -->
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:id="@+id/task_item0"
-        android:layout_below="@+id/tvDate0"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+                  android:orientation="vertical"
+                  android:id="@+id/task_item0"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content" android:layout_below="@+id/tvDate0">
 
         <CheckBox android:id="@+id/checkbox_item0"
             android:layout_width="wrap_content"
@@ -186,4 +175,12 @@
         <!-- The text should change to the title of the event. Not hardcoded.-->
 
     </LinearLayout>
+    <TextView
+            android:id="@+id/tvDate0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:background="@color/background"
+            android:text="Today's Date" android:layout_below="@+id/menu" android:layout_alignParentStart="true"/>
 </RelativeLayout>
