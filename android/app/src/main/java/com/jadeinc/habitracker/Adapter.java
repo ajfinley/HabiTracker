@@ -9,17 +9,50 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class Adapter extends ArrayAdapter<Task>{
-        Task[] tasks = null;
-        Context context;
+import java.util.List;
 
-        public Adapter(Context context, Task[] resource) {
-            super(context, R.layout.task_row, resource);
-            this.context = context;
-            this.tasks = resource;
+public class Adapter extends BaseAdapter {
+        private List<Task> tasks;
+        private Context context;
+
+        public Adapter(Context mcontext, List<Task> t) {
+            context = mcontext;
+            tasks = t;
+        }
+
+        @Override
+        public int getCount() {
+            try {
+                int size = tasks.size();
+                return size;
+            } catch(NullPointerException o) {
+                return 0;
+            }
+        }
+
+        public void updateTasks(List<Task> t) {
+            tasks.clear();
+            tasks.addAll(t);
+            this.notifyDataSetChanged();
+        }
+
+        @Override
+        public Task getItem(int i) {
+            try {
+                Task t = tasks.get(i);
+                return t;
+            } catch (NullPointerException e) {
+                return null;
+            }
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
         }
 
         @Override
@@ -28,8 +61,8 @@ public class Adapter extends ArrayAdapter<Task>{
             convertView = inflater.inflate(R.layout.task_row, parent, false);
             TextView name = (TextView) convertView.findViewById(R.id.textView1);
             CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
-            name.setText(tasks[position].getTask());
-            if(tasks[position].isCompleted()) {
+            name.setText(tasks.get(position).getTask());
+            if(tasks.get(position).isCompleted()) {
                 cb.setChecked(true);
             } else {
                 cb.setChecked(false);

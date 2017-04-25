@@ -4,6 +4,7 @@ package com.jadeinc.habitracker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
@@ -19,8 +20,8 @@ import java.util.List;
 public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
-    ListView lv;
-    Task[] taskDisplay;
+    private ListView lv;
+    private List<Task> taskDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,8 @@ public class HabitList extends AppCompatActivity {
         tvDisplayDate0.setText(todayAsString);
         //tvDisplayDate1.setText(tomorrowAsString);
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
-        Task[] taskDisplay = new Task[]{new Task("water plants")};//(Task[]) tasks.toArray();
+        this.taskDisplay = new ArrayList<Task>();//(Task[]) tasks.toArray();
+        taskDisplay.add(new Task("water plants"));
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
     }
@@ -71,13 +73,7 @@ public class HabitList extends AppCompatActivity {
     private void generateListTask(List<User> users) {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
-        taskDisplay = new Task[tasks.size()];
-        for (int i = 0; i < tasks.size(); i++) {
-            taskDisplay[i] = tasks.get(i);
-        }
-        Adapter a = new Adapter(this, taskDisplay);
-        lv.setAdapter(a);
-
+        ((Adapter)lv.getAdapter()).updateTasks(tasks);
     }
 
 
