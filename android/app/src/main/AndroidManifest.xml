@@ -16,13 +16,6 @@
                 android:label="@string/title_activity_login">
         </activity>
         <activity
-                android:name=".HabitList"
-                android:label="@string/title_habit_list">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-        <activity
                 android:name=".ListDisplay"
                 android:label="listdisplay"
                 android:theme="@style/AppTheme.NoActionBar">
