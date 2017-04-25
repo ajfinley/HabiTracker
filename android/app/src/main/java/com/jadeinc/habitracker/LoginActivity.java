@@ -43,8 +43,8 @@ public class LoginActivity extends Activity  {
 //                        ed2.getText().toString().equals("admin")) {
                     Toast.makeText(getApplicationContext(),
                             "Getting your schedule up to date...",Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(LoginActivity.this, HabitList.class);
-                    startActivity(i);
+                    //Intent i = new Intent(LoginActivity.this, HabitList.class);
+                    //startActivity(i);
                 }else{
                     Toast.makeText(getApplicationContext(), "Wrong Credentials!",Toast.LENGTH_SHORT).show();
                 }
