@@ -20,6 +20,7 @@ public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
     ListView lv;
+    Task[] taskDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class HabitList extends AppCompatActivity {
         makeCallDB();
 
         setContentView(R.layout.activity_habit_list);
+        lv = (ListView) findViewById(R.id.lv_today);
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);
         //TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
@@ -51,6 +53,9 @@ public class HabitList extends AppCompatActivity {
         tvDisplayDate0.setText(todayAsString);
         //tvDisplayDate1.setText(tomorrowAsString);
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
+        Task[] taskDisplay = new Task[]{new Task("water plants")};//(Task[]) tasks.toArray();
+        Adapter adapter = new Adapter(this, taskDisplay);
+        lv.setAdapter(adapter);
     }
 
     private void makeCallDB() {
@@ -66,11 +71,13 @@ public class HabitList extends AppCompatActivity {
     private void generateListTask(List<User> users) {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
-        System.out.println(tasks);
-        Task[] taskDisplay = (Task[]) tasks.toArray();
-        lv = (ListView) findViewById(R.id.lv_today);
-        Adapter adapter = new Adapter(this, taskDisplay);
-        lv.setAdapter(adapter);
+        taskDisplay = new Task[tasks.size()];
+        for (int i = 0; i < tasks.size(); i++) {
+            taskDisplay[i] = tasks.get(i);
+        }
+        Adapter a = new Adapter(this, taskDisplay);
+        lv.setAdapter(a);
+
     }
 
 
