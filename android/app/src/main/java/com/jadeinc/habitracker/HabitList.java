@@ -4,6 +4,7 @@ package com.jadeinc.habitracker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -17,6 +18,8 @@ import java.util.List;
 public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
+    ListView lv;
+    ModelTask[] taskDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,8 @@ public class HabitList extends AppCompatActivity {
         setContentView(R.layout.activity_habit_list);
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);
-        TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
-        TextView tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
+        //TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
+        //TextView tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
 
 
         Calendar calendar = Calendar.getInstance();
@@ -46,9 +49,13 @@ public class HabitList extends AppCompatActivity {
 
 
         tvDisplayDate0.setText(todayAsString);
-        tvDisplayDate1.setText(tomorrowAsString);
-        tvDisplayDate2.setText(tomorrowtomorrowAsString);
+        //tvDisplayDate1.setText(tomorrowAsString);
+        //tvDisplayDate2.setText(tomorrowtomorrowAsString);
 
+        lv = (ListView) findViewById(R.id.lv_today);
+        taskDisplay = new ModelTask[5];
+        Adapter adapter = new Adapter(this, taskDisplay);
+        lv.setAdapter(adapter);
     }
 
     private void makeCallDB() {
@@ -68,19 +75,19 @@ public class HabitList extends AppCompatActivity {
 
 
 
-    public void onCheckboxClicked(View view) {
-        boolean checked = ((CheckBox) view).isChecked();
-
-        switch(view.getId()) {
-            case R.id.checkbox_item0:
-                if (checked) {
-                    System.out.print("This is if statement");
-                }
-                else
-                    break;
-                // TODO: We need to think of a way to populate the list to come up
-        }
-    }
+//    public void onCheckboxClicked(View view) {
+//        boolean checked = ((CheckBox) view).isChecked();
+//
+//        switch(view.getId()) {
+//            case R.id.checkbox_item0:
+//                if (checked) {
+//                    System.out.print("This is if statement");
+//                }
+//                else
+//                    break;
+//                // TODO: We need to think of a way to populate the list to come up
+//        }
+//    }
 
 
 }
