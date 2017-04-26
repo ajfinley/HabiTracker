@@ -17,11 +17,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.util.Log;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.graphics.Color;
 
 import java.util.List;
 
@@ -33,17 +28,10 @@ public class HabitList extends AppCompatActivity {
 
 
     public static final String TAG = "HabitList";
-<<<<<<< HEAD
-    ListView lv;
-    Task[] taskDisplay;
-
-
-=======
     private ListView lv;
     private List<Task> taskDisplay;
     private DBDataReceiver receiver;
     private User user;
->>>>>>> connect_list_to_db
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +44,8 @@ public class HabitList extends AppCompatActivity {
         Intent dbIntent = new Intent(this, DBService.class);
         startService(dbIntent);
 
-
         setContentView(R.layout.activity_habit_list);
         lv = (ListView) findViewById(R.id.lv_today);
-<<<<<<< HEAD
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        myToolbar.setTitleTextColor(Color.WHITE);
-
-
-=======
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -78,12 +57,10 @@ public class HabitList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
->>>>>>> connect_list_to_db
 
         TextView tvDisplayDate0 = (TextView) findViewById(R.id.tvDate0);
         //TextView tvDisplayDate1 = (TextView) findViewById(R.id.tvDate1);
         //TextView tvDisplayDate2 = (TextView) findViewById(R.id.tvDate2);
-
 
 
         Calendar calendar = Calendar.getInstance();
@@ -127,62 +104,8 @@ public class HabitList extends AppCompatActivity {
     public void generateTaskList(List<User> users) {
         user = users.get(0);
         List<Task> tasks = user.getTasks();
-<<<<<<< HEAD
-        taskDisplay = (Task[]) tasks.toArray();
-        lv = (ListView) findViewById(R.id.lv_today);
-
-        Adapter adapter = new Adapter(this, taskDisplay);
-        lv.setAdapter(adapter);
-=======
         ((Adapter)lv.getAdapter()).updateTasks(tasks);
->>>>>>> connect_list_to_db
     }
-
-
-
-<<<<<<< HEAD
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.create_task, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_create:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-=======
-
-
-
-
-//    public void onCheckboxClicked(View view) {
-//        boolean checked = ((CheckBox) view).isChecked();
-//
-//        switch(view.getId()) {
-//            case R.id.checkbox_item0:
-//                if (checked) {
-//                    System.out.print("This is if statement");
-//                }
-//                else
-//                    break;
-//                // TODO: We need to think of a way to populate the list to come up
-//        }
-//    }
->>>>>>> connect_list_to_db
 
 
 }

@@ -31,7 +31,7 @@ public class NewTask extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
         freq = (Spinner) findViewById(R.id.frequency);
         time = (Spinner) findViewById(R.id.time);
-        Button add = (Button) findViewById(R.id.add);
+        //Button add = (Button) findViewById(R.id.add);
         title = (EditText) findViewById(R.id.name);
 
         List<String> repeat = new ArrayList<String>();
@@ -53,20 +53,20 @@ public class NewTask extends AppCompatActivity {
         freq.setAdapter(a1);
         time.setAdapter(a2);
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(title.getText().toString().equals("") ||
-                        title == null) {
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter a habit title",Toast.LENGTH_SHORT).show();
-                } else{
-                    Task t = new Task(title.getText().toString());
-                    t.setFrequency(freq.getSelectedItem().toString());
-                    t.setTime(time.getSelectedItem().toString());
-                    t.setTimeCompleted("0");
-                }
-            }
-        });
+//        add.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(title.getText().toString().equals("") ||
+//                        title == null) {
+//                    Toast.makeText(getApplicationContext(),
+//                            "Please enter a habit title",Toast.LENGTH_SHORT).show();
+//                } else{
+//                    Task t = new Task(title.getText().toString());
+//                    t.setFrequency(freq.getSelectedItem().toString());
+//                    t.setTime(time.getSelectedItem().toString());
+//                    t.setTimeCompleted("0");
+//                }
+//            }
+//        });
     }
 }
