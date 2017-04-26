@@ -32,7 +32,7 @@ public class DBService extends IntentService {
 
     public static final String TAG = "DBConnector";
 
-    public static final String DATABASE_ENDPOINT = "http://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
+    public static final String DATABASE_ENDPOINT = "http://www.epellegrini.com/get_data";//"http://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
 
     public static List<User> users;
 
@@ -63,10 +63,10 @@ public class DBService extends IntentService {
                 Unirest.post(DATABASE_ENDPOINT)
                         .header("accept", "application/json")
                         .body(rootString)
-                        .asStringAsync(new Callback<String>() {
+                        .asStringAsyncadmin(new Callback<String>() {
                     @Override
                     public void completed(HttpResponse<String> httpResponse) {
-                        Log.v(TAG, "completed: " + httpResponse.getBody());
+                        Log.v(TAG, "completed user post of user" + httpResponse.getBody());
                     }
 
                     @Override

@@ -18,6 +18,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".HabitList"
             android:label="@string/title_habit_list"
@@ -26,15 +30,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".NewTask"
             android:label="Create New Task">
-
         </activity>
 
         <service android:enabled="true" android:name=".DBService"></service>
