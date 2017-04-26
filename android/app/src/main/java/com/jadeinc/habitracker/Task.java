@@ -1,14 +1,17 @@
 package com.jadeinc.habitracker;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by evan on 4/20/17.
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
     private String task;
     private String time;
     private String frequency;
-    private String timeCompleted;
+    private int timeCompleted;
     private long daySec = 86400;
 
     public int bestStreak;
@@ -33,20 +36,26 @@ public class Task {
     public String getFrequency() { return this.frequency; }
     public void setFrequency(String frequency) { this.frequency = frequency; }
 
-    public String getTimeCompleted() {return this.timeCompleted;}
+    public int getTimeCompleted() {return this.timeCompleted;}
 
-    public void setTimeCompleted(String timeCompleted) {this.timeCompleted = timeCompleted;}
+    public void setTimeCompleted(String timeCompleted) {this.timeCompleted = Integer.parseInt(timeCompleted);}
+    public void setTimeCompleted(int timeCompleted) {this.timeCompleted = timeCompleted;}
+
+
+    public void complete() {
+        int now = (int) (System.currentTimeMillis() / 1000);
+        this.setTimeCompleted(now);
+    }
 
     public boolean isCompleted() {
+        long currTime = System.currentTimeMillis() / 1000;
+        if (timeCompleted == 0) {
+            return false;
+        }
+        if (currTime - daySec <= timeCompleted) {
+            return true;
+        }
         return false;
-//        long currTime = System.currentTimeMillis() / 1000;
-//        if (timeCompleted == null) {
-//            return false;
-//        }
-//        if (currTime - daySec >= Integer.parseInt(timeCompleted)) {
-//            return true;
-//        }
-//        return false;
     }
 
     @Override

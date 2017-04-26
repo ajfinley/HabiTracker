@@ -61,6 +61,7 @@ public class Adapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.task_row, parent, false);
             TextView name = (TextView) convertView.findViewById(R.id.textView1);
             CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
+            cb.setTag(tasks.get(position).getTask());
             name.setText(tasks.get(position).getTask());
             if(tasks.get(position).isCompleted()) {
                 cb.setChecked(true);

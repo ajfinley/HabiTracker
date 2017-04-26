@@ -12,6 +12,13 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
+import local.org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import local.org.apache.http.conn.ssl.SSLContexts;
+import local.org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import local.org.apache.http.impl.client.CloseableHttpClient;
+import local.org.apache.http.impl.client.HttpClients;
+
+import javax.net.ssl.SSLContext;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -25,12 +32,28 @@ public class DBService extends IntentService {
 
     public static final String TAG = "DBConnector";
 
-    public static final String DATABASE_ENDPOINT = "https://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
+    public static final String DATABASE_ENDPOINT = "http://w06sur7dz1.execute-api.us-east-1.amazonaws.com/prod/HabiTrackerUpdate?TableName=HabitTracker";
 
     public static List<User> users;
 
     public DBService() {
         super("DBConnector");
+
+        try{
+
+        SSLContext sslcontext = SSLContexts.custom()
+                .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                .build();
+
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext);
+        CloseableHttpClient httpclient = HttpClients.custom()
+                .setSSLSocketFactory(sslsf)
+                .build();
+        Unirest.setHttpClient(httpclient);
+        } catch (Exception e) {
+            Log.e(TAG, "dun broke", e);
+        }
+
     }
 
     public void postUser(final User user) {
