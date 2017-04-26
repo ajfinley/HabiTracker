@@ -25,6 +25,7 @@ public class HabitList extends AppCompatActivity {
 
     public static final String TAG = "HabitList";
     ListView lv;
+    Task[] taskDisplay;
 
 
 
@@ -35,6 +36,7 @@ public class HabitList extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_habit_list);
+        lv = (ListView) findViewById(R.id.lv_today);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -81,13 +83,9 @@ public class HabitList extends AppCompatActivity {
     private void generateListTask(List<User> users) {
         User user = users.get(0);
         List<Task> tasks = user.getTasks();
-        List<String> task_names = new ArrayList<>();
-        for (Task task: tasks) {
-            task_names.add(task.getTask());
-        }
-        System.out.println(tasks);
-        Task[] taskDisplay = (Task[]) tasks.toArray();
+        taskDisplay = (Task[]) tasks.toArray();
         lv = (ListView) findViewById(R.id.lv_today);
+
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
     }
