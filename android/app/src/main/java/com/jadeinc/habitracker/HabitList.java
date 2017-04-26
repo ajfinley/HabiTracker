@@ -9,6 +9,7 @@ import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -85,6 +87,18 @@ public class HabitList extends AppCompatActivity {
         taskDisplay.add(new Task("water plants"));
         Adapter adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
+
+
+
+        //moving to add new task
+        ImageButton addNew = (ImageButton) findViewById(R.id.add_task);
+        addNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HabitList.this, NewTask.class);
+                startActivity(i);
+            }
+        });
     }
 
     public void onCheckBoxClicked(View view) {
