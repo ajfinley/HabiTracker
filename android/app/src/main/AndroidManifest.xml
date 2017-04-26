@@ -34,7 +34,9 @@
         </activity>
         <activity
             android:name=".NewTask"
-            android:label="Create New Task">
+            android:label="Create New Task"
+            android:theme="@style/AppTheme">
+            >
         </activity>
 
         <service android:enabled="true" android:name=".DBService"></service>

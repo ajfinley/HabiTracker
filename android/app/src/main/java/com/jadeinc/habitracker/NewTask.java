@@ -34,7 +34,7 @@ public class NewTask extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
         freq = (Spinner) findViewById(R.id.frequency);
         time = (Spinner) findViewById(R.id.time);
-        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+        ImageButton add = (ImageButton) findViewById(R.id.add);
         ImageButton cancel = (ImageButton) findViewById(R.id.cancel);
         title = (EditText) findViewById(R.id.name);
 
