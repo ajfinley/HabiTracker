@@ -39,13 +39,6 @@ public class HabitList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IntentFilter filter = new IntentFilter(DBDataReceiver.ACTION_RESP);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new DBDataReceiver();
-        registerReceiver(receiver, filter);
-        Intent dbIntent = new Intent(this, DBService.class);
-        startService(dbIntent);
-
         setContentView(R.layout.activity_habit_list);
         lv = (ListView) findViewById(R.id.lv_today);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,6 +92,17 @@ public class HabitList extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(DBDataReceiver.ACTION_RESP);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new DBDataReceiver();
+        registerReceiver(receiver, filter);
+        Intent dbIntent = new Intent(this, DBService.class);
+        startService(dbIntent);
     }
 
     public void onCheckBoxClicked(View view) {
