@@ -74,6 +74,8 @@ public class NewTask extends AppCompatActivity {
                         User user = users.get(0);
                         user.addTask(t);
                         new DBService().postUser(user);
+                        Intent i = new Intent(NewTask.this, HabitList.class);
+                        startActivity(i);
                     } else {
                         Log.e("hi", "users are null");
                     }
