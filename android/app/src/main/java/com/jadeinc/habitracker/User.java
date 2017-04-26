@@ -1,12 +1,14 @@
 package com.jadeinc.habitracker;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by evan on 4/20/17.
  */
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private String email;
     private String name;
@@ -73,6 +75,15 @@ public class User {
 
     public void addTask(Task task) {
         this.tasks.add(task);
+    }
+
+    public Task getTaskByName(String taskName) {
+        for (Task task : this.getTasks()) {
+            if (taskName == task.getTask()) {
+                return task;
+            }
+        }
+        return null;
     }
 
     @Override
