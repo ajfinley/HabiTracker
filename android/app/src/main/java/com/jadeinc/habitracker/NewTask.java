@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class NewTask extends AppCompatActivity {
         freq = (Spinner) findViewById(R.id.frequency);
         time = (Spinner) findViewById(R.id.time);
         FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+        ImageButton cancel = (ImageButton) findViewById(R.id.cancel);
         title = (EditText) findViewById(R.id.name);
 
         List<String> repeat = new ArrayList<String>();
@@ -67,6 +69,14 @@ public class NewTask extends AppCompatActivity {
                     t.setTime(time.getSelectedItem().toString());
                     t.setTimeCompleted("0");
                 }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(NewTask.this, HabitList.class);
+                startActivity(i);
             }
         });
     }
