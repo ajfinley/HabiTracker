@@ -2,11 +2,13 @@ package com.jadeinc.habitracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,8 @@ public class NewTask extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
         freq = (Spinner) findViewById(R.id.frequency);
         time = (Spinner) findViewById(R.id.time);
-        //Button add = (Button) findViewById(R.id.add);
+        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.add);
+        ImageButton cancel = (ImageButton) findViewById(R.id.cancel);
         title = (EditText) findViewById(R.id.name);
 
         List<String> repeat = new ArrayList<String>();
@@ -53,20 +56,28 @@ public class NewTask extends AppCompatActivity {
         freq.setAdapter(a1);
         time.setAdapter(a2);
 
-//        add.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(title.getText().toString().equals("") ||
-//                        title == null) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Please enter a habit title",Toast.LENGTH_SHORT).show();
-//                } else{
-//                    Task t = new Task(title.getText().toString());
-//                    t.setFrequency(freq.getSelectedItem().toString());
-//                    t.setTime(time.getSelectedItem().toString());
-//                    t.setTimeCompleted("0");
-//                }
-//            }
-//        });
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(title.getText().toString().equals("") ||
+                        title == null) {
+                    Toast.makeText(getApplicationContext(),
+                            "Please enter a habit title",Toast.LENGTH_SHORT).show();
+                } else{
+                    Task t = new Task(title.getText().toString());
+                    t.setFrequency(freq.getSelectedItem().toString());
+                    t.setTime(time.getSelectedItem().toString());
+                    t.setTimeCompleted("0");
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(NewTask.this, HabitList.class);
+                startActivity(i);
+            }
+        });
     }
 }
