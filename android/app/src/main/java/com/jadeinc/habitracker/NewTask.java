@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -68,6 +69,16 @@ public class NewTask extends AppCompatActivity {
                     t.setFrequency(freq.getSelectedItem().toString());
                     t.setTime(time.getSelectedItem().toString());
                     t.setTimeCompleted("0");
+                    List<User> users = DBDataReceiver.users;
+                    if (users != null) {
+                        User user = users.get(0);
+                        user.addTask(t);
+                        new DBService().postUser(user);
+                    } else {
+                        Log.e("hi", "users are null");
+                    }
+
+
                 }
             }
         });
