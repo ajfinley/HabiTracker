@@ -22,7 +22,7 @@ var states = {
 getTasks = function(session, params, callback) {
     docClient.get(params, function(err, data) {
         if (err) {
-            console.error("Unable to read item. Error JSON:" + recipe);
+            console.error("Unable to read item. Error JSON:" + JSON.stringify(err, null, 2));
             callback(false);
         } else {
             console.log("GetItem succeeded:" + JSON.stringify(data["Item"], null, 2));
@@ -55,7 +55,7 @@ var newSessionHandlers = {
                 session.attributes['tasks'] = tasks;
                 session.handler.state = states.SELECTMODE;
                 var toDo = 0;
-                var currentTime = Date.now()/1000;
+                var currentTime = Math.round(Date.now()/1000);
                 for (var i = 0; i < session.attributes["tasks"].length; i++) {
                     if ((currentTime - session.attributes["tasks"][i]["timeCompleted"])/3600 > 18 && session.attributes["tasks"][i]["frequency"] == "daily") {
                         toDo++;
@@ -111,7 +111,7 @@ var startSelectHandlers = Alexa.CreateStateHandler(states.SELECTMODE, {
     },
     'DoTodayIntent': function() {
         var toDo = [];
-        var currentTime = Date.now()/1000;
+        var currentTime = Math.round(Date.now()/1000);
         for (var i = 0; i < this.attributes["tasks"].length; i++) {
             if ((currentTime - this.attributes["tasks"][i]["timeCompleted"])/3600 > 18 && this.attributes["tasks"][i]["frequency"] == "daily") {
                 toDo.push(this.attributes["tasks"][i]["task"]);
@@ -149,7 +149,7 @@ var startSelectHandlers = Alexa.CreateStateHandler(states.SELECTMODE, {
     },
     'Unhandled': function() {
         console.log("UNHANDLED");
-        this.emit(':ask', 'unhandled message');
+        this.emit(':ask', 'Sorry I didn\'t get that. You can say what are my habits to get a list of everything, i want to check off a habit if you finished something, track a new habit to create a new habit, i want to change followed by a habit name to make a change, or what are my stats for followed by a habit to get your stats');
     }
 });
 
@@ -166,7 +166,7 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
     },
     'TaskFrequencyIntent': function() {
         this.attributes['newTask']['frequency'] = this.event.request.intent.slots.frequency.value;
-        this.emit(":ask", "Would you like to be reminded in the morning, afternoon, or night?");
+        this.emit(":ask", "Would you like to be reminded in the morning, afternoon, or evening?");
     },
     'TaskTimeIntent': function() {
         this.attributes['newTask']['time'] = this.event.request.intent.slots.taskTime.value;
@@ -184,8 +184,11 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
             session.emit(":ask", "OK I will remind you, is there anything else you want to do?");
         });
     },
+    'AMAZON.NoIntent': function() {
+        this.emit(":ask", "Ok if you want to change the name say i want to followed by what the name you want. If you want to change the frequency say either daily, weekly, or monthly. If you want to change the time of day say morning, afternoon, or evening.");
+    },
     'AMAZON.HelpIntent': function() {
-        this.emit(':ask', 'You need to specify a name, a frequency of daily, weekly, or monthly, and a time of day that you would like to be reminded either morning, afternoon, or night');
+        this.emit(':ask', 'You need to specify a name, a frequency of daily, weekly, or monthly, and a time of day that you would like to be reminded either morning, afternoon, or evening');
     },
     'ReadAllIntent': function() {
         var habits = [];
@@ -204,7 +207,7 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
     },
     'Unhandled': function() {
         console.log("UNHANDLED");
-        this.emit(':ask', 'Sorry I didn\'t get that. If you were specifying a frequency say daily, weekly, or monthly. If you were specifying a time of day say morning, afternoon, or night.');
+        this.emit(':ask', 'Sorry I didn\'t get that. If you were trying to name the habit say i want to followed by the name. If you were specifying a frequency say daily, weekly, or monthly. If you were specifying a time of day say morning, afternoon, or evening.');
     }
 });
 
@@ -218,7 +221,7 @@ var completeTaskModeHandlers = Alexa.CreateStateHandler(states.COMPLETEMODE, {
     'CompletedSpecificIntent': function() {
         for (var i = 0; i < this.attributes["tasks"].length; i++) {
             if (this.attributes["tasks"][i]["task"] == this.event.request.intent.slots.completeTask.value) {
-                var currentTime = Date.now()/1000;
+                var currentTime = Math.round(Date.now()/1000);
                 if ((currentTime - this.attributes["tasks"][i]["timeCompleted"])/3600 < 24 && this.attributes["tasks"][i]["frequency"] == "daily") {
                     this.attributes['tasks'][i]['currentStreak'] += 1;
                     if (this.attributes['tasks'][i]['currentStreak'] > this.attributes['tasks'][i]['bestStreak']) {
@@ -252,7 +255,7 @@ var completeTaskModeHandlers = Alexa.CreateStateHandler(states.COMPLETEMODE, {
         this.emit(":ask", "I am sorry I couldn't find your specified habit, could you try again");
     },
     'AMAZON.HelpIntent': function() {
-        this.emit(':ask', 'You need to specify which habit you finished, you can say what are my habits to get the full list if you do not recall the name.');
+        this.emit(':ask', 'You need to specify which habit you finished by saying i finished followed by the task name, you can say what are my habits to get the full list if you do not recall the name.');
     },
     'ReadAllIntent': function() {
         var habits = [];
@@ -271,17 +274,23 @@ var completeTaskModeHandlers = Alexa.CreateStateHandler(states.COMPLETEMODE, {
     },
     'Unhandled': function() {
         console.log("UNHANDLED");
-        this.emit(':ask', 'Sorry, I didn\'t get that. You need to specify which habit you finished, you can say what are my habits to get the full list if you do not recall the name.');
+        this.emit(':ask', 'Sorry, I didn\'t get that. You need to specify which habit you finished by saying i finished followed by the task name, you can say what are my habits to get the full list if you do not recall the name.');
     }
 });
 
 var editTaskModeHandlers = Alexa.CreateStateHandler(states.EDITMODE, {
+    'NewSession': function() {
+        this.emit('NewSession');
+    },
+    'LaunchRequest': function() {
+        this.emit('NewSession');
+    },
     'EditWhatIntent': function() {
         this.attributes["editType"] = this.event.request.intent.slots.editType.value;
         if (this.event.request.intent.slots.editType.value == "frequency") {
             this.emit(":ask", "Would you like to set it to daily, weekly, or monthly?");
         } else if (this.event.request.intent.slots.editType.value == "time of day") {
-            this.emit(":ask", "Would you like to set it to morning, afternoon, or night?");
+            this.emit(":ask", "Would you like to set it to morning, afternoon, or evening?");
         } else {
             this.emit(":ask", "I am sorry I did not catch that, do you want to change the name, frequency, or time of day?");
         }
@@ -315,7 +324,7 @@ var editTaskModeHandlers = Alexa.CreateStateHandler(states.EDITMODE, {
         this.emit(":ask", "I am sorry I did not understand, could you restate?");
     },
     'AMAZON.HelpIntent': function() {
-        this.emit(":ask", "You can specify whether you were changing the name, frequency, or time of day. If you are specifying a frequency say daily, weekly, or monthly. If you are specifying a time of day say morning, afternoon, or night.")
+        this.emit(":ask", "You can specify whether you were changing the name, frequency, or time of day. If you are specifying a frequency say daily, weekly, or monthly. If you are specifying a time of day say morning, afternoon, or evening.")
     },
     'ReadAllIntent': function() {
         var habits = [];
@@ -329,6 +338,6 @@ var editTaskModeHandlers = Alexa.CreateStateHandler(states.EDITMODE, {
     },
     'Unhandled': function() {
         console.log("UNHANDLED");
-        this.emit(':ask', 'Sorry, I didn\'t get that. You can specify whether you were changing the name, frequency, or time of day. If you are specifying a frequency say daily, weekly, or monthly. If you are specifying a time of day say morning, afternoon, or night.');
+        this.emit(':ask', 'Sorry, I didn\'t get that. You can specify whether you were changing the name, frequency, or time of day. If you are specifying a frequency say daily, weekly, or monthly. If you are specifying a time of day say morning, afternoon, or evening.');
     }
 });
