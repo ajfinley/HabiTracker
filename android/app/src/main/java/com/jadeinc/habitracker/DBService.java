@@ -63,7 +63,7 @@ public class DBService extends IntentService {
                 Unirest.post(DATABASE_ENDPOINT)
                         .header("accept", "application/json")
                         .body(rootString)
-                        .asStringAsyncadmin(new Callback<String>() {
+                        .asStringAsync(new Callback<String>() {
                     @Override
                     public void completed(HttpResponse<String> httpResponse) {
                         Log.v(TAG, "completed user post of user" + httpResponse.getBody());
