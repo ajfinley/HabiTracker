@@ -82,7 +82,7 @@
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/lv_today"
+            android:id="@+id/lv"
             android:layout_below="@+id/tvDate0"/>
 
     <ImageButton

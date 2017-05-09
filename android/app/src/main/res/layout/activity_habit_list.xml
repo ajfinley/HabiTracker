@@ -50,7 +50,7 @@
                 android:textSize="20sp"
                 android:background="@drawable/my_button_bg"
                 android:text="stats"
-                android:onClick="onStatsClicked"/>
+                android:onClick="onStatsClick"/>
         <TextView
                 android:layout_width="0dp"
                 android:layout_weight=".15"

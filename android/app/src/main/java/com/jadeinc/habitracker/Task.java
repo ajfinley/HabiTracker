@@ -45,6 +45,8 @@ public class Task {
     public void complete() {
         int now = (int) (System.currentTimeMillis() / 1000);
         this.setTimeCompleted(now);
+        currentStreak++;
+        bestStreak = Math.max(currentStreak, bestStreak);
     }
 
     public boolean isCompleted() {

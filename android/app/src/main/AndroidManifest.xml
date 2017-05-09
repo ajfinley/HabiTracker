@@ -22,10 +22,6 @@
         <activity android:name=".HabitList"
             android:label="@string/title_habit_list"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -38,6 +34,10 @@
                 android:name=".StatsActivity"
                 android:label="Stats"
                 android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <service android:enabled="true" android:name=".DBService">
