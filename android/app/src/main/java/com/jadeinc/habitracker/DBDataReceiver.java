@@ -20,7 +20,11 @@ public class DBDataReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         List<Task> tasks = users.get(0).getTasks();  //new ArrayList();//DBConnector.users.get(0).getTasks();
-        ((HabitList) context).generateTaskList(users);
+        if(context instanceof HabitList) {
+            ((HabitList) context).generateTaskList(users);
+        } else if (context instanceof StatsActivity) {
+            ((StatsActivity) context).generateTaskList(users);
+        }
         Log.v("DBReceiver", intent.getAction());
     }
 

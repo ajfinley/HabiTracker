@@ -1,5 +1,7 @@
 package com.jadeinc.habitracker;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -10,7 +12,7 @@ import java.util.List;
  * Created by evan on 4/20/17.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class User{
     private String email;
     private String name;
     private String username;
@@ -102,5 +104,6 @@ public class User {
         s += this.tasks.toString();
         return s;
     }
+
 
 }
