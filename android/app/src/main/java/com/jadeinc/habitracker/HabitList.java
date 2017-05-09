@@ -7,18 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.internal.widget.AdapterViewCompat;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,6 +29,7 @@ public class HabitList extends AppCompatActivity {
     private ListView lv;
     private List<Task> taskDisplay;
     private DBDataReceiver receiver;
+    private Adapter adapter;
     private User user;
 
     @Override
@@ -78,7 +75,7 @@ public class HabitList extends AppCompatActivity {
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
         this.taskDisplay = new ArrayList<Task>();//(Task[]) tasks.toArray();
         taskDisplay.add(new Task("water plants"));
-        Adapter adapter = new Adapter(this, taskDisplay);
+        adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
 
 
@@ -116,6 +113,15 @@ public class HabitList extends AppCompatActivity {
             task.setTimeCompleted(task.getTimeCompleted() - 90000);
         }
         new DBService().postUser(this.user);
+    }
+
+    public void onDeleteButtonClicked(View view) {
+        Button button = (Button) view;
+        String taskName = button.getTag().toString();
+        user.removeTask(taskName);
+        new DBService().postUser(user);
+        Log.v(TAG, "habit deleted");
+        adapter.updateTasks(user.getTasks());
     }
 
 

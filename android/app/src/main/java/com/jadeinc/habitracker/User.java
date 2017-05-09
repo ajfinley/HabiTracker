@@ -87,6 +87,15 @@ public class User {
         return null;
     }
 
+    public void removeTask(String taskName) {
+        for (Task task : tasks ) {
+            if(task.getTask() == taskName) {
+                tasks.remove(task);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         String s = "name: " + this.name + ", tasks: ";
