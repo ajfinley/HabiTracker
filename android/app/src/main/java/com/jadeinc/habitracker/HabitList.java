@@ -131,5 +131,10 @@ public class HabitList extends AppCompatActivity {
         ((Adapter)lv.getAdapter()).updateTasks(tasks);
     }
 
+    public void onStatsClicked(View view) {
+        Intent myIntent = new Intent(this, StatsActivity.class);
+        this.startActivity(myIntent);
+    }
+
 
 }
