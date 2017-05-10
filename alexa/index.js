@@ -52,6 +52,7 @@ var newSessionHandlers = {
                 for(var i = 0; i < task["tasks"].length; i++) {
                     tasks.push(task["tasks"][i]);
                 }
+                session.attributes['stepByStep'] = false;
                 session.attributes['tasks'] = tasks;
                 session.handler.state = states.SELECTMODE;
                 var toDo = 0;
@@ -93,7 +94,7 @@ var startSelectHandlers = Alexa.CreateStateHandler(states.SELECTMODE, {
         this.emit('NewSession');
     },
     'AMAZON.HelpIntent': function() {
-        this.emit(':ask', "You can say what are my habits to get a list of everything, i want to check off a habit if you finished something, track a new habit to create a new habit, i want to change followed by a habit name to make a change, or what are my stats for followed by a habit to get your stats");
+        this.emit(':ask', "You can say what are my habits to get a list of everything, i want to check off a habit if you finished something, track a new habit to create a new habit, i want to change followed by a habit name to make a change, what are my stats for followed by a habit to get your stats, or stop tracking followed by a habit to remove it.");
     },
     "AMAZON.StopIntent": function() {
         this.emit(":tell", "Goodbye!");   
@@ -171,7 +172,7 @@ var startSelectHandlers = Alexa.CreateStateHandler(states.SELECTMODE, {
     },
     'Unhandled': function() {
         console.log("UNHANDLED");
-        this.emit(':ask', 'Sorry I didn\'t get that. You can say what are my habits to get a list of everything, i want to check off a habit if you finished something, track a new habit to create a new habit, i want to change followed by a habit name to make a change, or what are my stats for followed by a habit to get your stats');
+        this.emit(':ask', 'Sorry I didn\'t get that. You can say what are my habits to get a list of everything, i want to check off a habit if you finished something, track a new habit to create a new habit, i want to change followed by a habit name to make a change, what are my stats for followed by a habit to get your stats, or stop tracking followed by a habit to remove it.');
     }
 });
 
@@ -184,6 +185,7 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
     },
     'TaskNameIntent': function() {
         this.attributes['newTask'] = {"task":this.event.request.intent.slots.taskName.value};
+        this.attributes['stepByStep'] = true;
         this.emit(":ask", "How often would you like to do this? Daily, weekly, or monthly?");
     },
     'TaskFrequencyIntent': function() {
@@ -213,7 +215,11 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
 
         this.handler.state = states.SELECTMODE;
         updateTasks(this, params, function(session) {
-            session.emit(":ask", "OK I will remind you, is there anything else you want to do?");
+            if (session.attributes['stepByStep'] == false) {
+                session.emit(":ask", "OK I will remind you, is there anything else you want to do?");
+            } else {
+                session.emit(":ask", "OK I will remind you, next time you can use one phrase in the form i want to " + session.attributes["newTask"]["task"] + " " + session.attributes["newTask"]["frequency"] + " remind me in the " + session.attributes["newTask"]["time"]);
+            }
         });
     },
     'AMAZON.NoIntent': function() {

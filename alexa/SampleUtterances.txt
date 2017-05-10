@@ -1,7 +1,12 @@
 ReadAllIntent what are my habits
+ReadAllIntent what habits am i tracking
 DoTodayIntent what do i have to do today
+DoTodayIntent what habits do i still have to do today
 DeleteTaskIntent stop tracking {study|taskName}
+DeleteTaskIntent remove {study|taskName}
+DeleteTaskIntent delete {study|taskName}
 AllDetailsTaskIntent i want to {study|taskName} {frequency} remind me in the {taskTime}
+AllDetailsTaskIntent remind me to {study|taskName} {frequency} in the {taskTime}
 EditStatsIntent i want to change {study|editName}
 EditStatsIntent i want to edit {study|editName}
 EditWhatIntent {editType}
@@ -10,6 +15,8 @@ GetStatsIntent tell me the stats for {study|statsName}
 CompletedSpecificIntent i finished {study|completeTask}
 TaskCompletedIntent i want to check off a habit
 NewTaskIntent track a new habit
+NewTaskIntent form a new habit
+NewTaskIntent remind me for a new habit
 TaskNameIntent i want to {study|taskName}
 TaskFrequencyIntent {frequency}
 TaskTimeIntent {taskTime}
