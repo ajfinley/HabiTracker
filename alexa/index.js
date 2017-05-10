@@ -285,9 +285,14 @@ var completeTaskModeHandlers = Alexa.CreateStateHandler(states.COMPLETEMODE, {
                 var params = {TableName: table, Key:{"userid":"Test"}, UpdateExpression: "set tasks = :tasks", ExpressionAttributeValues: {":tasks":this.attributes["tasks"]}, ReturnValues:"UPDATED_NEW"};
                 this.handler.state = states.SELECTMODE;
                 updateTasks(this, params, function(session) {
-                    session.emit(":ask", "Great job, keep up the good work. Is there anything else I can do for you?");
+                    if (session == false) {
+                        session.emit(":ask", "I'm sorry I couldn't find that.");
+                    } else {
+                        session.emit(":ask", "Great job, keep up the good work. Is there anything else I can do for you?");     
+                    }
                 });
                 return;
+
             }
         };
         this.emit(":ask", "I am sorry I couldn't find your specified habit, could you try again");
