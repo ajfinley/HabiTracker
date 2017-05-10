@@ -66,7 +66,7 @@ public class StatsAdapter extends BaseAdapter {
         TextView lastCompleted = (TextView) convertView.findViewById(R.id.lastCompleted);
         int timeStamp = tasks.get(position).getTimeCompleted();
         java.util.Date time =new java.util.Date((long)timeStamp*1000);
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mma dd/MM");
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mma MM/dd");
         String sDate= sdf.format(time);
         lastCompleted.setText("Last Completed: " + sDate);
         return convertView;
