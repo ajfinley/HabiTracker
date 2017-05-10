@@ -69,11 +69,9 @@ public class StatsActivity extends AppCompatActivity {
         String tomorrowtomorrowAsString = dateFormat.format(tomorrowtomorrow);
 
 
-        tvDisplayDate0.setText(todayAsString);
         //tvDisplayDate1.setText(tomorrowAsString);
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
         this.taskDisplay = new ArrayList<Task>();//(Task[]) tasks.toArray();
-        taskDisplay.add(new Task("water plants"));
         adapter = new StatsAdapter(this, taskDisplay);
         lv.setAdapter(adapter);
 

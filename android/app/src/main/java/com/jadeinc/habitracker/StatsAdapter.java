@@ -59,11 +59,11 @@ public class StatsAdapter extends BaseAdapter {
         TextView name = (TextView) convertView.findViewById(R.id.textViewStats);
         name.setText(tasks.get(position).getTask());
         TextView bestStreak = (TextView) convertView.findViewById(R.id.bestStreak);
-        bestStreak.setText("best streak: " + String.valueOf(tasks.get(position).bestStreak));
+        bestStreak.setText("Best Streak: " + String.valueOf(tasks.get(position).bestStreak));
         TextView currStreak = (TextView) convertView.findViewById(R.id.currStreak);
-        currStreak.setText("current streak: " + String.valueOf(tasks.get(position).currentStreak));
+        currStreak.setText("Current Streak: " + String.valueOf(tasks.get(position).currentStreak));
         TextView lastCompleted = (TextView) convertView.findViewById(R.id.lastCompleted);
-        lastCompleted.setText("last completed: " + String.valueOf(tasks.get(position).getTimeCompleted()));
+        lastCompleted.setText("Last Completed: " + String.valueOf(tasks.get(position).getTimeCompleted()));
         return convertView;
     }
 }

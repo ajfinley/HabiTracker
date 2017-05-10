@@ -70,20 +70,21 @@
             android:id="@+id/tvDate0"
             android:layout_below="@+id/menu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_marginTop="10dp"
             android:padding="8dp"
             android:textSize="16sp"
-            android:background="@color/background"
-            android:text="Today's Date"/>
-    <!-- This will change to an actual date. e.g. Thursday, April 20, 2017 -->
+            android:background="@color/gray"
+            android:text=""/>
+            <!--android:background="@color/background"-->
+            <!--android:text="Today's Date"-->
 
 
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/lv"
-            android:layout_below="@+id/tvDate0"/>
+            android:layout_below="@+id/tvDate0"
+            android:id="@+id/lv" />
 
     <ImageButton
             android:id="@+id/add_task"
