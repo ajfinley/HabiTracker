@@ -74,7 +74,6 @@ public class HabitList extends AppCompatActivity {
         //tvDisplayDate1.setText(tomorrowAsString);
         //tvDisplayDate2.setText(tomorrowtomorrowAsString);
         this.taskDisplay = new ArrayList<Task>();//(Task[]) tasks.toArray();
-        taskDisplay.add(new Task("water plants"));
         adapter = new Adapter(this, taskDisplay);
         lv.setAdapter(adapter);
 
