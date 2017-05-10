@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class StatsAdapter extends BaseAdapter {
@@ -63,7 +64,11 @@ public class StatsAdapter extends BaseAdapter {
         TextView currStreak = (TextView) convertView.findViewById(R.id.currStreak);
         currStreak.setText("Current Streak: " + String.valueOf(tasks.get(position).currentStreak));
         TextView lastCompleted = (TextView) convertView.findViewById(R.id.lastCompleted);
-        lastCompleted.setText("Last Completed: " + String.valueOf(tasks.get(position).getTimeCompleted()));
+        int timeStamp = tasks.get(position).getTimeCompleted();
+        java.util.Date time =new java.util.Date((long)timeStamp*1000);
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mma dd/MM");
+        String sDate= sdf.format(time);
+        lastCompleted.setText("Last Completed: " + sDate);
         return convertView;
     }
 }
