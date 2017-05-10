@@ -131,6 +131,28 @@ var startSelectHandlers = Alexa.CreateStateHandler(states.SELECTMODE, {
         this.handler.state = states.NEWTASKMODE;
         this.emit(':ask', "What habit would you like to track?");
     },
+    'DeleteTaskIntent': function() {
+        for (var i = 0; i < this.attributes["tasks"].length; i++) {
+            if (this.attributes["tasks"][i]["task"] == this.event.request.intent.slots.taskName.value) {
+                delete this.attributes["tasks"][i];
+                var params = {TableName: table, Key:{"userid":"Test"}, UpdateExpression: "set tasks = :tasks", ExpressionAttributeValues: {":tasks":this.attributes["tasks"]}, ReturnValues:"UPDATED_NEW"};
+
+                updateTasks(this, params, function(session) {
+                    session.emit(":ask", "OK I won't remind you anymore");
+                });
+            }
+        }
+    },
+    'AllDetailsTaskIntent': function() {
+        this.handler.state = states.NEWTASKMODE;
+        this.attributes['newTask'] = {"task":this.event.request.intent.slots.taskName.value};
+        this.attributes['newTask']['frequency'] = this.event.request.intent.slots.frequency.value;
+        this.attributes['newTask']['time'] = this.event.request.intent.slots.taskTime.value;
+        this.attributes['newTask']['timeCompleted'] = 0;
+        this.attributes['newTask']['bestStreak'] = 0;
+        this.attributes['newTask']['currentStreak'] = 0;
+        this.emit(":ask", "So you want to " + this.attributes["newTask"]["task"] + " " + this.attributes["newTask"]["frequency"] + " and you want to be reminded in the " + this.attributes["newTask"]["time"]);
+    },
     'TaskCompletedIntent': function() {
         this.handler.state = states.COMPLETEMODE;
         this.emit(":ask", "Which habit did you finish?");
@@ -170,6 +192,16 @@ var newTaskModeHandlers = Alexa.CreateStateHandler(states.NEWTASKMODE, {
     },
     'TaskTimeIntent': function() {
         this.attributes['newTask']['time'] = this.event.request.intent.slots.taskTime.value;
+        this.emit(":ask", "So you want to " + this.attributes["newTask"]["task"] + " " + this.attributes["newTask"]["frequency"] + " and you want to be reminded in the " + this.attributes["newTask"]["time"]);
+    },
+    'AllDetailsTaskIntent': function() {
+        this.handler.state = states.NEWTASKMODE;
+        this.attributes['newTask'] = {"task":this.event.request.intent.slots.taskName.value};
+        this.attributes['newTask']['frequency'] = this.event.request.intent.slots.frequency.value;
+        this.attributes['newTask']['time'] = this.event.request.intent.slots.taskTime.value;
+        this.attributes['newTask']['timeCompleted'] = 0;
+        this.attributes['newTask']['bestStreak'] = 0;
+        this.attributes['newTask']['currentStreak'] = 0;
         this.emit(":ask", "So you want to " + this.attributes["newTask"]["task"] + " " + this.attributes["newTask"]["frequency"] + " and you want to be reminded in the " + this.attributes["newTask"]["time"]);
     },
     'AMAZON.YesIntent': function() {
@@ -247,7 +279,7 @@ var completeTaskModeHandlers = Alexa.CreateStateHandler(states.COMPLETEMODE, {
                 var params = {TableName: table, Key:{"userid":"Test"}, UpdateExpression: "set tasks = :tasks", ExpressionAttributeValues: {":tasks":this.attributes["tasks"]}, ReturnValues:"UPDATED_NEW"};
                 this.handler.state = states.SELECTMODE;
                 updateTasks(this, params, function(session) {
-                    session.emit(":ask", "OK I have marked your completion, is there anything else I can do for you?");
+                    session.emit(":ask", "Great job, keep up the good work. Is there anything else I can do for you?");
                 });
                 return;
             }

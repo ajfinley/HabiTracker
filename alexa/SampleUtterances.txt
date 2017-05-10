@@ -1,14 +1,16 @@
 ReadAllIntent what are my habits
 DoTodayIntent what do i have to do today
-EditStatsIntent i want to change {go to the gym|editName}
-EditStatsIntent i want to edit {go to the gym|editName}
+DeleteTaskIntent stop tracking {study|taskName}
+AllDetailsTaskIntent i want to {study|taskName} {frequency} remind me in the {taskTime}
+EditStatsIntent i want to change {study|editName}
+EditStatsIntent i want to edit {study|editName}
 EditWhatIntent {editType}
-GetStatsIntent what are my stats for {go to the gym|statsName}
-GetStatsIntent tell me the stats for {go to the gym|statsName}
-CompletedSpecificIntent i finished {go to the gym|completeTask}
+GetStatsIntent what are my stats for {study|statsName}
+GetStatsIntent tell me the stats for {study|statsName}
+CompletedSpecificIntent i finished {study|completeTask}
 TaskCompletedIntent i want to check off a habit
 NewTaskIntent track a new habit
-TaskNameIntent i want to {go to the gym|taskName}
+TaskNameIntent i want to {study|taskName}
 TaskFrequencyIntent {frequency}
 TaskTimeIntent {taskTime}
 AMAZON.HelpIntent what can i say

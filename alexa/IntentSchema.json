@@ -9,6 +9,32 @@
     {
       "slots": [
         {
+          "name": "taskName",
+          "type": "AMAZON.LITERAL"
+        }
+      ],
+      "intent": "DeleteTaskIntent"
+    },
+    {
+      "slots": [
+        {
+          "name": "taskName",
+          "type": "AMAZON.LITERAL"
+        },
+        {
+          "name": "frequency",
+          "type": "FREQUENCY"
+        },
+        {
+          "name": "taskTime",
+          "type": "TASKTIME"
+        }
+      ],
+      "intent": "AllDetailsTaskIntent"
+    },
+    {
+      "slots": [
+        {
           "name": "editName",
           "type": "AMAZON.LITERAL"
         }
